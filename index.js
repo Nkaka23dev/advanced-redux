@@ -1,4 +1,5 @@
 const redux = require("redux");
+
 const magn = (string) => string.toUpperCase();
 
 const repeatThreeTimes = (string) => string.repeat(4);
