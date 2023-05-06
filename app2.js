@@ -24,9 +24,24 @@ const decrement = () => {
     )
 }
 const reducer = (state = initialState, action) => {
-    return ""
+
+    if (action.TYPE === INCREMENT) {
+        return (
+            {
+                ...state,
+                cakes: state.cakes + action.payload
+            }
+        )
+    }
+    if (action.TYPE === DECREMENT) {
+        return {
+            ...state,
+            candies: state.candies - 1
+        }
+    }
+    return state
 }
 
 const store = createStore(reducer);
-// console.log(redux)
-// console.log(store)
+
+console.log(store.dispatch(increment(6)))
