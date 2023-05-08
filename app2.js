@@ -1,47 +1,44 @@
-const redux = require('redux')
+const redux = require("redux");
 
 const createStore = redux.createStore;
 
-const INCREMENT = 'add'
-const DECREMENT = 'remove'
 
 const initialState = {
-    cakes: 10,
-    candies: 2
+    numberOfCake: 10,
+    candies: 1
 }
 
-const increment = (amount) => {
+const INCREMENT = "increase"
+const DECREMENT = "decrease"
+
+const increase = () => {
     return {
-        TYPE: INCREMENT,
+        type: INCREMENT,
+    }
+}
+const deduct = (amount) => {
+    return {
+        type: DECREMENT,
         payload: amount
     }
 }
-const decrement = () => {
-    return (
-        {
-            TYPE: DECREMENT
-        }
-    )
-}
 const reducer = (state = initialState, action) => {
-
-    if (action.TYPE === INCREMENT) {
-        return (
-            {
-                ...state,
-                cakes: state.cakes + action.payload
-            }
-        )
-    }
-    if (action.TYPE === DECREMENT) {
+    if (action.type === INCREMENT) {
         return {
             ...state,
-            candies: state.candies - 1
+            candies: state.candies + 1
+        }
+    }
+    if (action.type === DECREMENT) {
+        return {
+            ...state,
+            numberOfCake: state.numberOfCake - action.payload
         }
     }
     return state
 }
-
-const store = createStore(reducer);
-
-console.log(store.dispatch(increment(6)))
+const store = createStore(reducer)
+console.log("INITIAL STATES:", store.getState())
+store.subscribe(() => console.log("UPDATED STATE: ", store.getState()))
+store.dispatch(increase());
+store.dispatch(deduct(5));

@@ -10,9 +10,6 @@ const initialState = {
 const INCREMENT = 'increment'
 const ADD = 'ADD'
 
-const incrementAction = {
-    type: INCREMENT
-}
 const increment = () => {
     return {
         type: INCREMENT
@@ -47,3 +44,4 @@ store.dispatch(increment())
 store.dispatch(increment())
 store.dispatch(increment())
 store.subscribe(() => { console.log("Updated State:", store.getState()) })
+
