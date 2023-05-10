@@ -1,44 +1,52 @@
-const redux = require("redux");
+const redux = require('redux');
 
 const createStore = redux.createStore;
 
+const ADD = 'add';
 
-const initialState = {
-    numberOfCake: 10,
-    candies: 1
+const SUBSTRACT = 'substact';
+
+const initialStates = {
+    numberOfcakes: 10,
+    candies: 2
 }
-
-const INCREMENT = "increase"
-const DECREMENT = "decrease"
-
-const increase = () => {
+const increment = (amount) => {
     return {
-        type: INCREMENT,
-    }
-}
-const deduct = (amount) => {
-    return {
-        type: DECREMENT,
+        type: ADD,
         payload: amount
     }
 }
-const reducer = (state = initialState, action) => {
-    if (action.type === INCREMENT) {
-        return {
-            ...state,
-            candies: state.candies + 1
-        }
+const decrement = () => {
+    return {
+        type: SUBSTRACT,
     }
-    if (action.type === DECREMENT) {
-        return {
-            ...state,
-            numberOfCake: state.numberOfCake - action.payload
-        }
-    }
-    return state
 }
-const store = createStore(reducer)
-console.log("INITIAL STATES:", store.getState())
-store.subscribe(() => console.log("UPDATED STATE: ", store.getState()))
-store.dispatch(increase());
-store.dispatch(deduct(5));
+const reducer = (state = initialStates, action) => {
+    switch (action.type) {
+        case ADD:
+            return {
+                ...state,
+                candies: state.candies + action.payload
+            }
+        case SUBSTRACT:
+            return {
+                ...state,
+                numberOfcakes: state.numberOfcakes - 1
+            }
+        default:
+            return state
+    }
+}
+const store = createStore(reducer);
+store.subscribe(() => { console.log("UPDATED STATES: ", store.getState()) })
+console.log("INITIAL STATES, THAT IS TO SAY AT START", store.getState())
+store.dispatch(decrement())
+store.dispatch(decrement())
+store.dispatch(decrement())
+store.dispatch(decrement())
+store.dispatch(increment(5))
+store.dispatch(increment(5))
+store.dispatch(increment(5))
+store.dispatch(increment(5))
+
+
