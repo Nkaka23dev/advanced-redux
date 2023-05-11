@@ -1,47 +1,55 @@
-const redux = require('redux')
+const Redux = require("redux");
 
-const createStore = redux.createStore;
+const createStore = Redux.createStore;
+const combineReducers = Redux.combineReducers;
+const bindActionCreators = Redux.bindActionCreators;
+
+const ADD_USER = "user"
+const ADD_TASK = "task"
 
 const initialState = {
-    value: 0,
-    cakes: 98
+    users: [
+        { id: 1, name: "Victor" },
+        { id: 2, name: "Frank" },
+    ],
+    tasks: [
+        { title: "loremipsum dollar sit amet" },
+        { title: "order more energy drinks" },
+    ]
 }
+const addUser = (user) => (
+    {
+        type: ADD_USER,
+        payload: user
+    }
+)
+const addTask = (task) => (
+    {
+        type: ADD_TASK,
+        payload: task
+    }
+)
+const userReducer = (state = initialState.users, action) => {
+    if (action.type === ADD_USER) {
+        return [...state, action.payload]
+    }
+    return state;
+}
+const tasksReducer = (state = initialState.tasks, action) => {
+    if (action.type === ADD_TASK) {
+        return [...state, action.payload]
+    }
+    return state;
+}
+const reducer = combineReducers({ users: userReducer, tasks: tasksReducer });
+const store = createStore(reducer);
+const subscribe = () => console.log("SUBSCRIBED STATE", store.getState())
+store.subscribe(subscribe)
 
-const INCREMENT = 'increment'
-const ADD = 'ADD'
+const actions = bindActionCreators({ addUser, addTask }, store.dispatch)
 
-const increment = () => {
-    return {
-        type: INCREMENT
-    }
-}
-const add = (amount) => {
-    return {
-        type: ADD,
-        payload: amount
-    }
-}
-const reducer = (state = initialState, action) => {
-    if (action.type === INCREMENT) {
-        return {
-            ...state,
-            value: state.value + 1
-        }
-    }
-    if (action.type === ADD) {
-        return {
-            ...state,
-            value: state.value + action.payload,
-            cakes: state.cakes - action.payload
-        }
-    }
-    return state
-}
-const store = createStore(reducer)
-console.log("Initial State: ", store.getState());
-store.dispatch(increment())
-store.dispatch(increment())
-store.dispatch(increment())
-store.dispatch(increment())
-store.subscribe(() => { console.log("Updated State:", store.getState()) })
+actions.addUser({ id: 3, name: "Dalto" })
+actions.addTask({ id: 4, name: "Christella" });
+console.log("CURRENT STATE PRESENT IN OUR STORE", store.getState())
+
 
