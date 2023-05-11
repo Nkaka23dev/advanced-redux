@@ -1,13 +1,36 @@
-const redux = require("redux");
+const redux = require('redux')
 
-const magn = (string) => string.toUpperCase();
+const BUY_CAKE = 'BUY_CAKE';
 
-const repeatThreeTimes = (string) => string.repeat(4);
+const createStore = redux.createStore;
 
-const boldIt = (string) => string.bold()
+const initialState = {
+    numberOfCake: 10
+}
+const buyCake = () => {
+    return {
+        type: BUY_CAKE,
+        info: "Cakes are made of milk and flour"
+    }
+}
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case BUY_CAKE:
+            return {
+                ...state,
+                numberOfCake: state.numberOfCake - 1
+            }
+        default: return state
+    }
+}
+const store = createStore(reducer);
 
-const combinationOfAll = redux.compose(boldIt, repeatThreeTimes, magn)
+console.log(store.getState())
 
-// console.log(combinationOfAll("Nkaka"))
+store.subscribe(() => console.log("Updated State", store.getState()))
+store.dispatch(buyCake())
+store.dispatch(buyCake())
+store.dispatch(buyCake())
 
-console.log(combinationOfAll("james"))
+
+
