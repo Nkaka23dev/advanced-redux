@@ -38,15 +38,10 @@ const reducer = (state = initialStates, action) => {
     }
 }
 const store = createStore(reducer);
-store.subscribe(() => { console.log("UPDATED STATES: ", store.getState()) })
-console.log("INITIAL STATES, THAT IS TO SAY AT START", store.getState())
-store.dispatch(decrement())
-store.dispatch(decrement())
-store.dispatch(decrement())
-store.dispatch(decrement())
-store.dispatch(increment(5))
-store.dispatch(increment(5))
-store.dispatch(increment(5))
-store.dispatch(increment(5))
+const actions = redux.bindActionCreators({ increment, decrement }, store.dispatch);
+actions.increment(65);
+actions.decrement();
+console.log(store.getState())
+
 
 
