@@ -39,9 +39,19 @@ const reducer = (state = initialStates, action) => {
 }
 const store = createStore(reducer);
 const actions = redux.bindActionCreators({ increment, decrement }, store.dispatch);
-actions.increment(65);
-actions.decrement();
-console.log(store.getState())
+// const [incrementDispatch, decrementDispatch] = [increment, decrement].map((fn) => {
+//     redux.compose(store.dispatch, fn)
+// })
+const subscribe = () => console.log("subscribed state:", store.getState());
+store.subscribe(subscribe);
+
+actions.decrement()
+actions.decrement()
+actions.decrement()
+actions.decrement()
+actions.increment(1000)
+console.log("CURRENT STATE IS DISPLAYED RIGHT HERE", store.getState());
+
 
 
 
