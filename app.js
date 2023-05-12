@@ -2,7 +2,7 @@ const Redux = require("redux");
 
 const createStore = Redux.createStore;
 const combineReducers = Redux.combineReducers;
-const bindActionCreators = Redux.bindActionCreators;
+const bindActionCreators = Redux.bindActionCreators; 
 
 const ADD_USER = "user"
 const ADD_TASK = "task"
@@ -44,11 +44,11 @@ const tasksReducer = (state = initialState.tasks, action) => {
 const reducer = combineReducers({ users: userReducer, tasks: tasksReducer });
 const store = createStore(reducer);
 const subscribe = () => console.log("SUBSCRIBED STATE", store.getState())
-store.subscribe(subscribe)
+store.subscribe(subscribe); 
 
 const actions = bindActionCreators({ addUser, addTask }, store.dispatch)
 
-actions.addUser({ id: 3, name: "Dalto" })
+actions.addUser({ id: 3, name: "Dalto" });
 actions.addTask({ id: 4, name: "Christella" });
 console.log("CURRENT STATE PRESENT IN OUR STORE", store.getState())
 
