@@ -50,12 +50,14 @@ const taskReducer = (tasks = initialState.tasks, action) => {
 
 const reducer = combineReducers({ user: userReducer, task: taskReducer })
 const store = createStore(reducer);
-
 const action = bindActionCreators({ addUser, addTask }, store.dispatch);
+REDUX.compose()
 // store.dispatch(addUser("KWIZERA"))
 // store.dispatch(addTask("KWIZERA"))
 action.addUser("Munyana Christella")
 
-// console.log(store.getState())
+console.log(store.getState())
 
+const subscribe = () => console.log("subscribed state:", store.getState());
+store.subscribe(subscribe);
 
