@@ -1,47 +1,61 @@
-const redux = require('redux')
+const REDUX = require('redux');
 
-const createStore = redux.createStore;
+const createStore = REDUX.createStore;
+const combineReducers = REDUX.combineReducers;
+const bindActionCreators = REDUX.bindActionCreators;
 
 const initialState = {
-    value: 0,
-    cakes: 98
+    users: [
+        { id: 1, name: "Eric Nkaka" },
+        { id: 2, name: "Dunks Sky" }
+    ],
+    tasks: [
+        { title: "This is the first added task in the store" },
+        { title: "Hello  Eric Nkaka this is the second store" }
+    ]
 }
 
-const INCREMENT = 'increment'
-const ADD = 'ADD'
+const ADD_USER = "Add User";
 
-const increment = () => {
+const ADD_TASK = "Add Task";
+
+const addUser = (name) => {
     return {
-        type: INCREMENT
+        type: ADD_USER,
+        payload: name
     }
 }
-const add = (amount) => {
+const addTask = (title) => {
     return {
-        type: ADD,
-        payload: amount
+        type: ADD_TASK,
+        payload: title
     }
 }
-const reducer = (state = initialState, action) => {
-    if (action.type === INCREMENT) {
-        return {
-            ...state,
-            value: state.value + 1
-        }
+const userReducer = (users = initialState.users, action) => {
+    if (action.type === ADD_USER) {
+        return [
+            ...users,
+            { id: Math.floor(Math.random() * 10), name: action.payload }]
     }
-    if (action.type === ADD) {
-        return {
-            ...state,
-            value: state.value + action.payload,
-            cakes: state.cakes - action.payload
-        }
-    }
-    return state
+    return users
 }
-const store = createStore(reducer)
-console.log("Initial State: ", store.getState());
-store.dispatch(increment())
-store.dispatch(increment())
-store.dispatch(increment())
-store.dispatch(increment())
-store.subscribe(() => { console.log("Updated State:", store.getState()) })
+
+const taskReducer = (tasks = initialState.tasks, action) => {
+    if (action.type === ADD_TASK) {
+        return [
+            ...tasks, action.payload]
+    }
+    return tasks
+}
+
+const reducer = combineReducers({ user: userReducer, task: taskReducer })
+const store = createStore(reducer);
+
+const action = bindActionCreators({ addUser, addTask }, store.dispatch);
+// store.dispatch(addUser("KWIZERA"))
+// store.dispatch(addTask("KWIZERA"))
+action.addUser("Munyana Christella")
+
+// console.log(store.getState())
+
 
