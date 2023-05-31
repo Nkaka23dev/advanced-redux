@@ -1,13 +1,14 @@
-const redux = require("redux");
+const store = require('./app/store');
+const cakeActions = require('./features/cake/cakeSlice').cakeActions;
 
-const magn = (string) => string.toUpperCase();
+console.log("INITIAL STATES:", store.getState());
 
-const repeatThreeTimes = (string) => string.repeat(4);
+const subscription = store.subscribe(() => {
+    console.log("Updates State:", store.getState())
+})
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.ordered());
 
-const boldIt = (string) => string.bold()
-
-const combinationOfAll = redux.compose(boldIt, repeatThreeTimes, magn)
-
-// console.log(combinationOfAll("Nkaka"))
-
-console.log(combinationOfAll("james"))
+subscription();
