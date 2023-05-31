@@ -1,36 +1,14 @@
-const redux = require('redux')
+const store = require('./app/store');
+const cakeActions = require('./features/cake/cakeSlice').cakeActions;
 
-const BUY_CAKE = 'BUY_CAKE';
+console.log("INITIAL STATES:", store.getState());
 
-const createStore = redux.createStore;
+const subscription = store.subscribe(() => {
+    console.log("Updates State:", store.getState())
+})
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.ordered());
+store.dispatch(cakeActions.ordered());
 
-const initialState = {
-    numberOfCake: 10
-}
-const buyCake = () => {
-    return {
-        type: BUY_CAKE,
-        info: "Cakes are made of milk and flour"
-    }
-}
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case BUY_CAKE:
-            return {
-                ...state,
-                numberOfCake: state.numberOfCake - 1
-            }
-        default: return state
-    }
-}
-const store = createStore(reducer);
-
-console.log(store.getState())
-
-store.subscribe(() => console.log("Updated State", store.getState()))
-store.dispatch(buyCake())
-store.dispatch(buyCake())
-store.dispatch(buyCake())
-
-
-
+subscription();
