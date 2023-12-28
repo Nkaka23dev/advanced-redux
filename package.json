@@ -1,5 +1,5 @@
 {
-  "name": "advanced-redux",
+  "name": "redux-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "immer": "^10.0.3",
-    "redux": "^5.0.1"
+    "axios": "^0.19.0",
+    "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   }
 }
