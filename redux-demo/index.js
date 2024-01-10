@@ -22,7 +22,6 @@ const initialCakeReducer = {
 };
 
 const initialIceCreamReducer = {
-  numberOfMilk: 30,
   numberOfIceCream: 20,
 };
 
@@ -82,6 +81,11 @@ const iceCreamReducer = (state = initialIceCreamReducer, action) => {
         ...state,
         numberOfIceCream: state.numberOfIceCream + action.payload,
       };
+    case ORDER_CAKE:
+      return {
+        ...state,
+        numberOfIceCream: (state.numberOfIceCream -= 1),
+      };
     default:
       return state;
   }
@@ -92,12 +96,14 @@ const rootReducer = combineReducers({
   iceCream: iceCreamReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleWare(logger));
+// const store = createStore(rootReducer, applyMiddleWare(logger));
+
+const store = createStore(rootReducer);
 
 console.log("Initial State", store.getState());
-// const unsubscribe = store.subscribe(() => {
-//   console.log("Updated store", store.getState());
-// // });
+const unsubscribe = store.subscribe(() => {
+  console.log("Updated store", store.getState());
+});
 // const unsubscribe = store.subscribe(() => {});
 // store.dispatch(orderCake());
 // store.dispatch(orderCake());
@@ -108,13 +114,13 @@ const actions = bindActionCreator(
   { orderCake, restockCake, orderIceCream, resTockIceCream },
   store.dispatch
 );
-actions.orderCake();
-actions.orderCake();
-actions.orderCake();
+actions.orderIceCream();
+// actions.orderCake();
+// actions.orderCake();
 
-actions.restockCake(3);
+// actions.restockCake(3);
 
-actions.orderIceCream(4);
-actions.resTockIceCream(5);
+// actions.orderIceCream(4);
+// actions.resTockIceCream(5);
 
 // unsubscribe();
